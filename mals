@@ -1,0 +1,24 @@
+class Animal:
+    def __init__(self, qntd_patas, tamanho, nome):
+        self.qntd_patas = qntd_patas
+        self.tamanho = tamanho
+        self.__nome__ = nome
+
+    def __str__(self):
+        return f'''
+        Esse é seu Animal!
+        Nome:{self.__nome__}
+        Quantidade de patas:{self.qntd_patas}
+        Tamanho:{self.tamanho}'''
+
+a = Animal(4, "médio", "Dog")
+print(a)
+#@property
+#def nome(self):
+#    return self.__nome__
+#@nome.setter
+#def nome(self, nome):
+#    return self.__nome__ = nome
+
+
+
