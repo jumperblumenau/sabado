@@ -90,17 +90,46 @@ class App:
         else:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
 
+ # #   def mostrar_opcoes(self, conta):
+ #
+ #        for widget in self.frame.winfo_children():
+ #            widget.destroy()
+ #
+ #
+ #        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=5)
+ #
+ #        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
+ #        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
+ #        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
+ #        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
+ #        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+
     def mostrar_opcoes(self, conta):
+
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
+        # Create a new frame to hold the buttons
+        button_frame = tk.Frame(self.root)
+        button_frame.pack(pady=5)  # Add padding around the button frame
 
-        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
-        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+        # Option 1: Using grid with columnspan and sticky
+        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=5)
+        consultar_saldo_button = tk.Button(button_frame, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta))
+        consultar_saldo_button.grid(row=0, column=0, columnspan=2, sticky=tk.E + tk.W, pady=5)
+
+        depositar_button = tk.Button(button_frame, text="Depositar", command=lambda: self.depositar(conta))
+        depositar_button.grid(row=1, column=0, columnspan=2, sticky=tk.E + tk.W, pady=5)
+
+        sacar_button = tk.Button(button_frame, text="Sacar", command=lambda: self.sacar(conta))
+        sacar_button.grid(row=2, column=0, columnspan=2, sticky=tk.E + tk.W, pady=5)
+
+        tranferir_button = tk.Button(button_frame, text="Transferir", command=lambda: self.transferir(conta))
+        tranferir_button.grid(row=3, column=0, columnspan=2, sticky=tk.E + tk.W, pady=5)
+
+        sugerir_emprestimo_button = tk.Button(button_frame, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta))
+        sugerir_emprestimo_button.grid(row=4, column=0, columnspan=2, sticky=tk.E + tk.W, pady=5)
+
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
