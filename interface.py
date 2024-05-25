@@ -7,7 +7,7 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Banco")
-        self.root.geometry("600x600")
+        self.root.geometry("300x500")
         self.create_widgets()
 
     def create_widgets(self):
@@ -94,7 +94,7 @@ class App:
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
+        x = tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(10)
 
         tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
         tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
