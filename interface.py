@@ -53,8 +53,8 @@ class App:
         self.sair_button = tk.Button(self.frame, text="Sair", command=self.root.destroy)
         self.sair_button.grid(row=11, column=0, columnspan=2, pady=10)
 
-        self.clear_button = tk.Button(self.frame, text="clear", command=self.clear)
-        self.clear_button.grid(row=10, column=0, columnspan=2, pady=10)
+        self.limpar_button = tk.Button(self.frame, text="Limpar", command=self.limpar)
+        self.limpar_button.grid(row=10, column=0, columnspan=2, pady=10)
 
     def cadastrar(self):
         nome = self.nome_entry.get()
@@ -69,7 +69,7 @@ class App:
         else:
             messagebox.showerror("Erro", "Todos os campos são obrigatórios.")
 
-    def clear(self):
+    def limpar(self):
         self.nome_entry.delete(0, tk.END)
         self.cpf_entry.delete(0, tk.END)
         self.agencia_entry.delete(0, tk.END)
