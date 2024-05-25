@@ -7,7 +7,7 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Banco")
-        self.root.geometry("600x600")
+        self.root.geometry("300x400")
         self.create_widgets()
 
     def create_widgets(self):
@@ -95,12 +95,23 @@ class App:
             widget.destroy()
 
         tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
+        tk.Label.grid(row=10, column=0, columnspan=2, pady=10)
 
         tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
+        tk.Button.grid(row=10, column=0, columnspan=2, pady=10)
+
         tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
+        tk.Button.grid(row=10, column=0, columnspan=2, pady=10)
+
         tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
+        tk.Button.grid(row=10, column=0, columnspan=2, pady=10)
+
         tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+        tk.Button.grid(row=10, column=0, columnspan=2, pady=10)
+
+        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=1)
+        tk.Button.grid(row=10, column=0, columnspan=2, pady=10)
+
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
