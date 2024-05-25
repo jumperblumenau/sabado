@@ -53,7 +53,7 @@ class App:
         self.sair_button = tk.Button(self.frame, text="Sair", command=self.root.destroy)
         self.sair_button.grid(row=11, column=0, columnspan=2, pady=10)
 
-        self.clear_button = tk.Button(self.frame, text="clear", command=self.clear)
+        self.clear_button = tk.Button(self.frame, text="Limpar", command=self.clear)
         self.clear_button.grid(row=10, column=0, columnspan=2, pady=10)
 
     def cadastrar(self):
