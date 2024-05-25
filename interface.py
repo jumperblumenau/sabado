@@ -91,6 +91,9 @@ class App:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
 
     def mostrar_opcoes(self, conta):
+        self.root = tk.Tk()
+        self.root.title("Banco")
+        self.root.geometry("600x600")
         for widget in self.frame.winfo_children():
             widget.destroy()
 
