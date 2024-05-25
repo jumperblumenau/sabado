@@ -7,7 +7,7 @@ class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Banco")
-        self.root.geometry("600x600")
+        self.root.geometry("800x700")
         self.create_widgets()
 
     def create_widgets(self):
@@ -91,16 +91,18 @@ class App:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
 
     def mostrar_opcoes(self, conta):
+        self.root = tk.Tk()
+        self.root.geometry("800x600")
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
+        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=130)
 
-        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
-        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=7)
+        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=7)
+        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=7)
+        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=7)
+        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=7)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
