@@ -3,6 +3,18 @@ from tkinter import messagebox, simpledialog
 import sqlite3
 from banco import ContaCorrente
 
+
+def consultar_contas():
+    conn = sqlite3.connect('banco_contas.db')
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM contas")
+    contas = cursor.fetchall()
+    conn.close()
+
+    contas_str = "\n".join([f"Nome: {conta[1]}, CPF: {conta[2]}, Agência: {conta[3]}, Conta: {conta[4]}, Saldo: R${conta[5]:.2f}" for conta in contas])
+    messagebox.showinfo("Contas Cadastradas", contas_str)
+
+
 class App:
     def __init__(self, root):
         self.root = root
@@ -40,11 +52,10 @@ class App:
         self.entrar_button = tk.Button(self.frame, text="Entrar", command=self.entrar)
         self.entrar_button.grid(row=6, column=0, columnspan=2, pady=10)
 
-        self.consultar_contas_button = tk.Button(self.frame, text="Consultar Contas", command=self.consultar_contas)
+        self.consultar_contas_button = tk.Button(self.frame, text="Consultar Contas", command=consultar_contas)
         self.consultar_contas_button.grid(row=7, column=0, columnspan=2, pady=10)
 
-        self.consultar_cartao_button = tk.Button(self.frame, text="Consultar Cartão de Crédito",
-                                                 command=self.consultar_cartao)
+        self.consultar_cartao_button = tk.Button(self.frame, text="Consultar Cartão de Crédito", command=self.consultar_cartao)
         self.consultar_cartao_button.grid(row=8, column=0, columnspan=2, pady=10)
 
         self.extrato_button = tk.Button(self.frame, text="Ver Extrato", command=self.ver_extrato)
@@ -96,13 +107,15 @@ class App:
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=50)
+        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=100)
 
         tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
         tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
         tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
         tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
         tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+
+        tk.Button(self.root, text="consultar cartão de crédito", command=lambda: self.consultar_cartao(conta)).pack(pady=5)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
@@ -166,16 +179,6 @@ class App:
         else:
             messagebox.showinfo("Empréstimo", "Você não está elegível para um empréstimo no momento.")
 
-    def consultar_contas(self):
-        conn = sqlite3.connect('banco_contas.db')
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM contas")
-        contas = cursor.fetchall()
-        conn.close()
-
-        contas_str = "\n".join([f"Nome: {conta[1]}, CPF: {conta[2]}, Agência: {conta[3]}, Conta: {conta[4]}, Saldo: R${conta[5]:.2f}" for conta in contas])
-        messagebox.showinfo("Contas Cadastradas", contas_str)
-
     def consultar_cartao(self):
         cartao = self.conta_corrente.gerar_cartao_credito()
         messagebox.showinfo("Cartão de Crédito", str(cartao))
@@ -189,3 +192,7 @@ class App:
     def consultar_limite_disponivel(self):
         limite = self.conta_corrente.consultar_limite_disponivel()
         messagebox.showinfo("Limite Disponível", f"Limite Disponível: R${limite:.2f}")
+
+    def consulltar_cartao(self):
+        cartao = self.conta_corrente.consultar_cartao_credito()
+        messagebox.showinfo("Cartão de Crédito", str(cartao))
