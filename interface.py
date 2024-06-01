@@ -5,10 +5,13 @@ from banco import ContaCorrente
 
 class App:
     def __init__(self, root):
+        self.conta_corrente = None
         self.root = root
         self.root.title("Banco")
         self.root.geometry("600x600")
         self.create_widgets()
+
+        self.root.mainloop()
 
     def create_widgets(self):
         self.frame = tk.Frame(self.root)
@@ -91,6 +94,8 @@ class App:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
 
     def mostrar_opcoes(self, conta):
+        self.root = tk.Tk()
+        self.root.geometry("800x600")
         for widget in self.frame.winfo_children():
             widget.destroy()
 
@@ -101,6 +106,7 @@ class App:
         tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
         tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
         tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+        tk.Button(self.root, text="consultar cartao", command=self.consultar_cartao()).pack(pady=5)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
