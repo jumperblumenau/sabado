@@ -91,16 +91,20 @@ class App:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
 
     def mostrar_opcoes(self, conta):
+        self.root.geometry("800x800")
         for widget in self.frame.winfo_children():
-            widget.destroy()
+                widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
+        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").grid(row=10, column=0, columnspan=2, pady=10)
 
-        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
-        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).grid(row=0, column=0, columnspan=2, pady=5)
+        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).grid(row=1, column=0,  pady=5)
+        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).grid(row=2, column=0,pady=5)
+        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).grid(row=3, column=0, pady=5)
+        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).grid(row=4, column=0, pady=5)
+        tk.Button(self.root, text="Consultar Cartao de Crédito", command=lambda: self.consultar_cartao_de_credito(conta)).grid(row=5, column=0, pady=5)
+        tk.Button(self.root, text="Ver Extrato", command=lambda: self.ver_extrato(conta)).grid(row=6, column=0, columnspan=2, pady=5)
+        tk.Button(self.root, text="Consultar Limite Disponível", command=lambda: self.consultar_limite_disponivel(conta)).grid(row=7, column=0,  pady=5)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
