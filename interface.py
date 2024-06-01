@@ -2,12 +2,12 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 import sqlite3
 from banco import ContaCorrente
-
+from banco import CartaoCredito
 class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Banco")
-        self.root.geometry("600x600")
+        self.root.geometry("400x500")
         self.create_widgets()
 
     def create_widgets(self):
@@ -43,17 +43,13 @@ class App:
         self.consultar_contas_button = tk.Button(self.frame, text="Consultar Contas", command=self.consultar_contas)
         self.consultar_contas_button.grid(row=7, column=0, columnspan=2, pady=10)
 
-        self.consultar_cartao_button = tk.Button(self.frame, text="Consultar Cartão de Crédito",
-                                                 command=self.consultar_cartao)
-        self.consultar_cartao_button.grid(row=8, column=0, columnspan=2, pady=10)
-
         self.extrato_button = tk.Button(self.frame, text="Ver Extrato", command=self.ver_extrato)
         self.extrato_button.grid(row=9, column=0, columnspan=2, pady=10)
 
         self.sair_button = tk.Button(self.frame, text="Sair", command=self.root.destroy)
         self.sair_button.grid(row=11, column=0, columnspan=2, pady=10)
 
-        self.clear_button = tk.Button(self.frame, text="clear", command=self.clear)
+        self.clear_button = tk.Button(self.frame, text="limpar", command=self.clear)
         self.clear_button.grid(row=10, column=0, columnspan=2, pady=10)
 
     def cadastrar(self):
@@ -89,19 +85,19 @@ class App:
             self.mostrar_opcoes(list(conta))  # Converte a tupla para lista
         else:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
+# preciso alterar a localização dos botões abaixo
 
     def mostrar_opcoes(self, conta):
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
-
-        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
-        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
-
+        tk.Label(self.frame, text=f"Bem-vindo, {conta[1]}!").grid(row=1, column=0, columnspan=2, pady=2)
+        tk.Button(self.frame, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).grid(row=2, column=0, columnspan=2,pady=2)
+        tk.Button(self.frame, text="Depositar", command=lambda: self.depositar(conta)).grid(row=3, column=0, columnspan=2,pady=2)
+        tk.Button(self.frame, text="Sacar", command=lambda: self.sacar(conta)).grid(row=4, column=0, columnspan=2,pady=2)
+        tk.Button(self.frame, text="Transferir", command=lambda: self.transferir(conta)).grid(row=5, column=0, columnspan=2,pady=2)
+        tk.Button(self.frame, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).grid(row=6, column=0, columnspan=2,pady=2)
+        tk.Button(self.frame, text="Consultar Cartão de Crédito", command=lambda: self.consultar_cartao()).grid(row=7, column=0, columnspan=2,pady=2)
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
         cursor = conn.cursor()
@@ -174,12 +170,12 @@ class App:
         contas_str = "\n".join([f"Nome: {conta[1]}, CPF: {conta[2]}, Agência: {conta[3]}, Conta: {conta[4]}, Saldo: R${conta[5]:.2f}" for conta in contas])
         messagebox.showinfo("Contas Cadastradas", contas_str)
 
-    def consultar_cartao(self):
+    def consultar_cartao(self,):
         cartao = self.conta_corrente.gerar_cartao_credito()
         messagebox.showinfo("Cartão de Crédito", str(cartao))
 
     def ver_extrato(self):
-        extrato = self.conta_corrente.extrato()
+        extrato = self.conta.extrato()
         extrato_str = "\n".join(
             [f"{transacao[2]}: {transacao[0]} - Saldo: R${transacao[1]:.2f}" for transacao in extrato])
         messagebox.showinfo("Extrato", extrato_str)
