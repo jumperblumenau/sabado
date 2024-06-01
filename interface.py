@@ -46,10 +46,6 @@ class App:
         self.consultar_contas_button = tk.Button(self.frame, text="Consultar Contas", command=self.consultar_contas)
         self.consultar_contas_button.grid(row=7, column=0, columnspan=2, pady=10)
 
-        self.consultar_cartao_button = tk.Button(self.frame, text="Consultar Cartão de Crédito",
-                                                 command=self.consultar_cartao)
-        self.consultar_cartao_button.grid(row=8, column=0, columnspan=2, pady=10)
-
         self.extrato_button = tk.Button(self.frame, text="Ver Extrato", command=self.ver_extrato)
         self.extrato_button.grid(row=9, column=0, columnspan=2, pady=10)
 
@@ -106,7 +102,7 @@ class App:
         tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
         tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
         tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
-        tk.Button(self.root, text="consultar cartao", command=self.consultar_cartao()).pack(pady=5)
+        tk.Button(self.root, text="consultar cartao de credito", command=lambda : self.consultar_cartao()).pack(pady=5)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
@@ -179,6 +175,8 @@ class App:
 
         contas_str = "\n".join([f"Nome: {conta[1]}, CPF: {conta[2]}, Agência: {conta[3]}, Conta: {conta[4]}, Saldo: R${conta[5]:.2f}" for conta in contas])
         messagebox.showinfo("Contas Cadastradas", contas_str)
+
+
 
     def consultar_cartao(self):
         cartao = self.conta_corrente.gerar_cartao_credito()
