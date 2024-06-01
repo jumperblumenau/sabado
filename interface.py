@@ -2,17 +2,18 @@ import tkinter as tk
 from tkinter import messagebox, simpledialog
 import sqlite3
 from banco import ContaCorrente
+from banco import CartaoCredito
 
 class App:
     def __init__(self, root):
         self.root = root
         self.root.title("Banco")
-        self.root.geometry("300x500")
+        self.root.geometry("400x500")
         self.create_widgets()
 
     def create_widgets(self):
         self.frame = tk.Frame(self.root)
-        self.frame.pack(pady=20)
+        self.frame.pack(pady=0)
 
         tk.Label(self.frame, text="Nome:").grid(row=0, column=0)
         self.nome_entry = tk.Entry(self.frame)
@@ -43,10 +44,6 @@ class App:
         self.consultar_contas_button = tk.Button(self.frame, text="Consultar Contas", command=self.consultar_contas)
         self.consultar_contas_button.grid(row=7, column=0, columnspan=2, pady=10)
 
-        self.consultar_cartao_button = tk.Button(self.frame, text="Consultar Cartão de Crédito",
-                                                 command=self.consultar_cartao)
-        self.consultar_cartao_button.grid(row=8, column=0, columnspan=2, pady=10)
-
         self.extrato_button = tk.Button(self.frame, text="Ver Extrato", command=self.ver_extrato)
         self.extrato_button.grid(row=9, column=0, columnspan=2, pady=10)
 
@@ -75,10 +72,10 @@ class App:
         self.agencia_entry.delete(0, tk.END)
         self.conta_entry.delete(0, tk.END)
         self.senha_entry.delete(0, tk.END)
+
     def entrar(self):
         cpf = self.cpf_entry.get()
         senha = self.senha_entry.get()
-
         conn = sqlite3.connect('banco_contas.db')
         cursor = conn.cursor()
         cursor.execute("SELECT * FROM contas WHERE cpf = ? AND senha = ?", (cpf, senha))
@@ -94,13 +91,14 @@ class App:
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        x = tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(10)
+        tk.Label(self.frame, text=f"Bem-vindo, {conta[1]}!").grid(row=2, column=0, columnspan=2, pady=10)
 
-        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
-        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
-        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
+        tk.Button(self.frame, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).grid(row=3, column=0, columnspan=2, pady=10)
+        tk.Button(self.frame, text="Depositar", command=lambda: self.depositar(conta)).grid(row=4, column=0, columnspan=2, pady=10)
+        tk.Button(self.frame, text="Sacar", command=lambda: self.sacar(conta)).grid(row=5, column=0, columnspan=2, pady=10)
+        tk.Button(self.frame, text="Transferir", command=lambda: self.transferir(conta)).grid(row=6, column=0, columnspan=2, pady=10)
+        tk.Button(self.frame, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).grid(row=7, column=0, columnspan=2, pady=10)
+        self.consultar_cartao_button = tk.Button(self.frame, text="Consultar Cartão de Crédito", command=lambda: self.consultar_cartao).grid(row=8, column=0, columnspan=2, pady=10)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')

@@ -1,5 +1,7 @@
 import sqlite3
 from datetime import datetime, timedelta
+from tkinter import messagebox
+
 import pytz
 import random
 
@@ -67,7 +69,7 @@ class ContaCorrente:
         Agência: {self.agencia}
         Conta: {self.num_conta}
         Limite Conta: R${self.limite_conta:.2f}
-        clear: {self.clear}
+        Limpar: {self.limpar}
     '''
 
     @staticmethod
