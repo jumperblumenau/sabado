@@ -96,13 +96,13 @@ class App:
         for widget in self.frame.winfo_children():
             widget.destroy()
 
-        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=130)
+        tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=50)
 
-        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=7)
-        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=7)
-        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=7)
-        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=7)
-        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=7)
+        tk.Button(self.root, text="Consultar Saldo", command=lambda: self.consultar_saldo(conta)).pack(pady=5)
+        tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
+        tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
+        tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
+        tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
 
     def consultar_saldo(self, conta):
         conn = sqlite3.connect('banco_contas.db')
