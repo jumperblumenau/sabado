@@ -91,10 +91,9 @@ class App:
             messagebox.showerror("Erro", "CPF ou senha incorretos.")
 
     def mostrar_opcoes(self, conta):
-        self.root = tk.Tk()
-        self.root.title("Banco")
         self.root.geometry("600x600")
-        for widget in self.frame.winfo_children():
+
+        for widget in self.root.winfo_children():
             widget.destroy()
 
         tk.Label(self.root, text=f"Bem-vindo, {conta[1]}!").pack(pady=10)
@@ -103,6 +102,8 @@ class App:
         tk.Button(self.root, text="Depositar", command=lambda: self.depositar(conta)).pack(pady=5)
         tk.Button(self.root, text="Sacar", command=lambda: self.sacar(conta)).pack(pady=5)
         tk.Button(self.root, text="Transferir", command=lambda: self.transferir(conta)).pack(pady=5)
+        tk.Button(self.root, text="Consultar Cartão", command=lambda: self.consultar_cartao()).pack(pady=5)
+        tk.Button(self.root, text="Consultar Limite", command=lambda: self.consultar_limite_cartao()).pack(pady=5)
         tk.Button(self.root, text="Sugerir Empréstimo", command=lambda: self.sugerir_emprestimo(conta)).pack(pady=5)
 
     def consultar_saldo(self, conta):
@@ -186,6 +187,10 @@ class App:
         extrato_str = "\n".join(
             [f"{transacao[2]}: {transacao[0]} - Saldo: R${transacao[1]:.2f}" for transacao in extrato])
         messagebox.showinfo("Extrato", extrato_str)
+
+    def consultar_limite_cartao(self):
+        limite_cartao = self.conta_corrente.consultar_limite_cartao()
+        messagebox.showinfo("Limite Cartão", f"Limite Cartão: R${limite_cartao:.2f}")
 
     def consultar_limite_disponivel(self):
         limite = self.conta_corrente.consultar_limite_disponivel()
